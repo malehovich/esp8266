@@ -18,9 +18,15 @@ while True:
             import http
             tmust=http.get(url)
             print(tmust)
+            if float(tmust)<t:
+                import motor
+                motor.open()
+            if float(tmust)>t:
+                import  motor
+                motor.close()
 
         else:
             print('Invalid sensor readings.')
     except OSError:
         print('Failed to read sensor.')
-    sleep(4)
+    sleep(5)
