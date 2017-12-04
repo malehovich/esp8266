@@ -2,6 +2,8 @@ from time import sleep
 from machine import Pin
 from dht import DHT22
 
+
+
 sensor = DHT22(Pin(2, Pin.IN, Pin.PULL_UP))  # DHT-22 on GPIO 15 (input with internal pull-up resistor)
 import wifi
 wifi.connect()

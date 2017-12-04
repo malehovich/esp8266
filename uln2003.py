@@ -1,12 +1,8 @@
-import microbit
-
-microbit.display.off()
-
 LOW = 0
 HIGH = 1
 FULL_ROTATION = int(4075.7728395061727 / 8)  # http://www.jangeox.be/2013/10/stepper-motor-28byj-48_25.html
 
-HALF_STEP = [
+HALF_STEP = {
     [LOW, LOW, LOW, HIGH],
     [LOW, LOW, HIGH, HIGH],
     [LOW, LOW, HIGH, LOW],
@@ -15,7 +11,7 @@ HALF_STEP = [
     [HIGH, HIGH, LOW, LOW],
     [HIGH, LOW, LOW, LOW],
     [HIGH, LOW, LOW, HIGH],
-]
+}
 
 FULL_STEP = [
     [HIGH, LOW, HIGH, LOW],
