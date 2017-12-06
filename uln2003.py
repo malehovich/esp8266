@@ -10,7 +10,7 @@ HALF_STEP = {
     [LOW, HIGH, LOW, LOW],
     [HIGH, HIGH, LOW, LOW],
     [HIGH, LOW, LOW, LOW],
-    [HIGH, LOW, LOW, HIGH],
+    [HIGH, LOW, LOW, HIGH]
 }
 
 FULL_STEP = [
