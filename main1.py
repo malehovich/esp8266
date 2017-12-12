@@ -21,14 +21,14 @@ while True:
             tmust=http.get(url)
             print(tmust)
             if float(tmust)<t:
-                import motor
-                motor.open()
+                import driver
+                driver.step(1,3200,600,12,13,4,5)
             if float(tmust)>t:
                 import  motor
-                motor.close()
+                driver.step(-1,3400,600,12,13,4,5)
 
         else:
             print('Invalid sensor readings.')
     except OSError:
         print('Failed to read sensor.')
-    sleep(5)
+    sleep(15)
