@@ -1,8 +1,10 @@
+import machine
+
 LOW = 0
 HIGH = 1
 FULL_ROTATION = int(4075.7728395061727 / 8)  # http://www.jangeox.be/2013/10/stepper-motor-28byj-48_25.html
 
-HALF_STEP = {
+HALF_STEP = [
     [LOW, LOW, LOW, HIGH],
     [LOW, LOW, HIGH, HIGH],
     [LOW, LOW, HIGH, LOW],
@@ -11,7 +13,7 @@ HALF_STEP = {
     [HIGH, HIGH, LOW, LOW],
     [HIGH, LOW, LOW, LOW],
     [HIGH, LOW, LOW, HIGH]
-}
+]
 
 FULL_STEP = [
     [HIGH, LOW, HIGH, LOW],
@@ -21,7 +23,7 @@ FULL_STEP = [
 ]
 
 
-class Command():
+class Command:
     """Tell a stepper to move X many steps in direction"""
 
     def __init__(self, stepper, steps, direction=1):
@@ -30,7 +32,7 @@ class Command():
         self.direction = direction
 
 
-class Driver():
+class Driver:
     """Drive a set of motors, each with their own commands"""
 
     @staticmethod
@@ -50,7 +52,7 @@ class Driver():
                     count += 1
 
 
-class Stepper():
+class Stepper:
     def __init__(self, mode, pin1, pin2, pin3, pin4, delay=2):
         self.mode = mode
         self.pin1 = pin1
@@ -64,9 +66,10 @@ class Stepper():
 
     def step(self, count, direction=1):
         """Rotate count steps. direction = -1 means backwards"""
+
         for x in range(count):
             for bit in self.mode[::direction]:
-                self.pin1.write_digital(bit[0])
+                p0=self.Pin(pin1,Pin.OUT,value=(bit[0]))
                 self.pin2.write_digital(bit[1])
                 self.pin3.write_digital(bit[2])
                 self.pin4.write_digital(bit[3])
@@ -75,15 +78,16 @@ class Stepper():
 
     def reset(self):
         # Reset to 0, no holding, these are geared, you can't move them
-        self.pin1.write_digital(0)
-        self.pin2.write_digital(0)
-        self.pin3.write_digital(0)
-        self.pin4.write_digital(0)
+        import machine
+        p0 = self.machine.Pin(pin1, Pin.OUT, value=0)
+        p1 = self.Pin(pin2, Pin.OUT, value=0)
+        p2 = self.Pin(pin3, Pin.OUT, value=0)
+        p3 = self.Pin(pin4, Pin.OUT, value=0)
 
 
 if __name__ == '__main__':
-    s1 = Stepper(HALF_STEP, microbit.pin16, microbit.pin15, microbit.pin14, microbit.pin13, delay=5)
-    s2 = Stepper(HALF_STEP, microbit.pin6, microbit.pin5, microbit.pin4, microbit.pin3, delay=5)
+    s1 = Stepper(HALF_STEP, 16, 15, 14, 13, delay=5)
+    s2 = Stepper(HALF_STEP, 6, 5, 4, 3, delay=5)
     # s1.step(FULL_ROTATION)
     # s2.step(FULL_ROTATION)
 
