@@ -7,6 +7,10 @@ from dht import DHT22
 sensor = DHT22(Pin(2, Pin.IN, Pin.PULL_UP))  # DHT-22 on GPIO 15 (input with internal pull-up resistor)
 import wifi
 wifi.connect()
+sost=2
+import driver
+driver.step(-1,3400,600,12,13,4,5)
+sost=0
 
 while True:
     try:
@@ -20,12 +24,13 @@ while True:
             import http
             tmust=http.get(url)
             print(tmust)
-            if float(tmust)<t:
-                import driver
-                driver.step(1,3200,600,12,13,4,5)
-            if float(tmust)>t:
-                import  motor
+            print(sost)
+            if (float(tmust)<t) and (sost!=0):
                 driver.step(-1,3400,600,12,13,4,5)
+                sost=0
+            if (float(tmust)>t) and (sost!=1) :
+                driver.step(1,3400,600,12,13,4,5)
+                sost=1
 
         else:
             print('Invalid sensor readings.')
